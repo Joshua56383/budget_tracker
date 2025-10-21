@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home | Budget Tracker{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Take Control of Your Finances</h1>
+    <p>Budget Tracker helps you manage your money smarter.
+        Track spending, view insights, and reach your savings goals with ease.</p>
+    <a href="{% url 'login' %}"><button>Get Started</button></a>
+</section>
+
+<section class="features">
+    <div class="feature-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png">
+        <h3>Smart Budgeting</h3>
+        <p>Plan your expenses and stay within your budget effortlessly.</p>
+    </div>
+    <div class="feature-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1170/1170627.png">
+        <h3>Track Everything</h3>
+        <p>Log every transaction to see where your money really goes.</p>
+    </div>
+    <div class="feature-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/4221/4221317.png">
+        <h3>Visual Reports</h3>
+        <p>Gain insights from clean, visual summaries and charts.</p>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Ready to manage your finances?</h2>
+    <p>Start today — it’s simple, secure, and completely free.</p>
+    <a href="{% url 'login' %}"><button>Start Tracking Now</button></a>
+</section>
+{% endblock %}

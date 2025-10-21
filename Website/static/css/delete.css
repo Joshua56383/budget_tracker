@@ -1,0 +1,58 @@
+.delete-page {
+  max-width: 900px;
+  margin: 40px auto; 
+  background: white;
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.delete-page h2 {
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 25px; 
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.table th, .table td {
+  text-align: left;
+  padding: 14px; 
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.table tr:hover {
+  background-color: #fff7d1;
+  transition: 0.3s; 
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.3s ease; 
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
+.no-data {
+  text-align: center;
+  padding: 50px;
+  color: #777; 
+}

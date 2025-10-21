@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="header">
+        <div class="header-left">
+            <h2>Welcome, <span style="color:var(--primary)">Joshua</span></h2>
+            <p>Here’s your financial overview for October 2025</p>
+        </div>
+        <div class="add-button" onclick="window.location.href='{% url 'add_transaction' %}'">
+            + Add new transaction
+        </div>
+    </div>
+
+    <div class="card balance-card">
+        <h3>Current Balance</h3>
+        <p>₱72,350.00</p>
+    </div>
+
+    <div class="chart-card">
+        <h3>Spending Overview</h3>
+        <canvas id="expenseChart" height="120"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>Recent Transactions</h3>
+        <ul class="transaction-list">
+            <li class="transaction-item">
+                <div class="details">
+                    <div class="title">Salary (October)</div>
+                    <div class="category">Income - 10/01/2025</div>
+                </div>
+                <div class="amount credit">+₱25,000.00</div>
+                <div class="actions">
+                    <button title="View" onclick="openModal('Salary (October)', '+₱25,000.00', 'Income', '10/01/2025')">👁️</button>
+                    <button title="Edit" onclick="window.location.href='{% url 'edit_transaction' %}'">✏️</button>
+                    <button title="Delete" onclick="if(confirm('Delete this transaction?')){window.location.href='{% url 'delete' %}';}">🗑️</button>
+                </div>
+            </li>
+
+            <li class="transaction-item">
+                <div class="details">
+                    <div class="title">Electric Bill</div>
+                    <div class="category">Bills & Utilities - 10/05/2025</div>
+                </div>
+                <div class="amount debit">-₱2,150.00</div>
+                <div class="actions">
+                    <button title="View" onclick="openModal('Electric Bill', '-₱2,150.00', 'Bills & Utilities', '10/05/2025')">👁️</button>
+                    <button title="Edit" onclick="window.location.href='{% url 'edit_transaction' %}'">✏️</button>
+                    <button title="Delete" onclick="if(confirm('Delete this transaction?')){window.location.href='{% url 'delete' %}';}">🗑️</button>
+                </div>
+            </li>
+
+            <li class="transaction-item">
+                <div class="details">
+                    <div class="title">Grocery Run</div>
+                    <div class="category">Food - 10/08/2025</div>
+                </div>
+                <div class="amount debit">-₱3,200.00</div>
+                <div class="actions">
+                    <button title="View" onclick="openModal('Grocery Run', '-₱3,200.00', 'Food', '10/08/2025')">👁️</button>
+                    <button title="Edit" onclick="window.location.href='{% url 'edit_transaction' %}'">✏️</button>
+                    <button title="Delete" onclick="if(confirm('Delete this transaction?')){window.location.href='{% url 'delete' %}';}">🗑️</button>
+                </div>
+            </li>
+
+            <li class="transaction-item">
+                <div class="details">
+                    <div class="title">Grab Rides</div>
+                    <div class="category">Transportation - 10/10/2025</div>
+                </div>
+                <div class="amount debit">-₱520.00</div>
+                <div class="actions">
+                    <button title="View" onclick="openModal('Grab Rides', '-₱520.00', 'Transportation', '10/10/2025')">👁️</button>
+                    <button title="Edit" onclick="window.location.href='{% url 'edit_transaction' %}'">✏️</button>
+                    <button title="Delete" onclick="if(confirm('Delete this transaction?')){window.location.href='{% url 'delete' %}';}">🗑️</button>
+                </div>
+            </li>
+
+            <li class="transaction-item">
+                <div class="details">
+                    <div class="title">Movie Night</div>
+                    <div class="category">Entertainment - 10/12/2025</div>
+                </div>
+                <div class="amount debit">-₱450.00</div>
+                <div class="actions">
+                    <button title="View" onclick="openModal('Movie Night', '-₱450.00', 'Entertainment', '10/12/2025')">👁️</button>
+                    <button title="Edit" onclick="window.location.href='{% url 'edit_transaction' %}'">✏️</button>
+                    <button title="Delete" onclick="if(confirm('Delete this transaction?')){window.location.href='{% url 'delete' %}';}">🗑️</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="summary-row">
+        <div class="card">
+            <h3>This Month’s Income</h3>
+            <p>₱25,000.00</p>
+        </div>
+        <div class="card">
+            <h3>This Month’s Expenses</h3>
+            <p>₱6,320.00</p>
+        </div>
+        <div class="card">
+            <h3>Remaining Budget</h3>
+            <p>₱18,680.00</p>
+        </div>
+    </div>
+</div>
+
+<div id="viewModal" 
+style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+ background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;">
+  <div style="background:white;padding:30px;border-radius:12px;box-shadow:var(--shadow);max-width:400px;text-align:center;">
+    <h2 id="modalTitle"></h2>
+    <p><strong>Amount:</strong> <span id="modalAmount"></span></p>
+    <p><strong>Category:</strong> <span id="modalCategory"></span></p>
+    <p><strong>Date:</strong> <span id="modalDate"></span></p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

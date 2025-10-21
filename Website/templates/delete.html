@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Delete Transaction{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/delete.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="delete-page">
+  <h2>Manage Transactions to Delete</h2>
+
+  {% if transactions %}
+  <table class="table">
+    <tr>
+      <th>Title</th>
+      <th>Amount</th>
+      <th>Category</th>
+      <th>Type</th>
+      <th>Action</th>
+    </tr>
+    {% for t in transactions %}
+    <tr>
+      <td>{{ t.title }}</td>
+      <td>₱{{ t.amount|floatformat:2 }}</td>
+      <td>{{ t.category }}</td>
+      
+      <td> /* cite: 51 */
+        {% if t.type == 'debit' %}
+          <span style="color:#e74c3c;">Expense</span>
+        {% else %}
+          <span style="color:#27ae60;">Income</span>
+        {% endif %}
+      </td>
+      <td>
+        <form method="post" action="{% url 'delete_transaction_confirm' t.id %}">
+          {% csrf_token %}
+       
+          <button type="submit" class="delete-btn">🗑️ Delete</button> /* cite: 52 */
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <div class="no-data">
+    <p>No transactions found to delete.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

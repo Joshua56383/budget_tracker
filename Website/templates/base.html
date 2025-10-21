@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Budget Tracker{% endblock %}</title>
+
+  
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+  {% block extra_style %}{% endblock %}
+</head>
+<body>
+
+  <header>
+    BUDGET TRACKER
+    <button id="theme-toggle">🌙</button>
+  </header>
+
+  <nav>
+    <a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+    <a href="{% url 'dashboard' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}">Dashboard</a>
+    <a href="{% url 'add_transaction' %}" class="{% if request.path == '/add-transaction/' %}active{% endif %}">Add</a>
+    <a href="{% url 'edit_transaction' %}" class="{% if request.path == '/edit-transaction/' %}active{% endif %}">Edit</a>
+    <a href="{% url 'delete' %}" class="{% if request.path == '/delete/' %}active{% endif %}">Delete</a>
+    <a href="{% url 'login' %}" class="{% if request.path == '/login/' %}active{% endif %}">Login</a>
+  </nav>
+
+  <main>
+    <div id="loading" style="text-align:center;margin-top:100px;">
+      <img src="https://i.gifer.com/ZZ5H.gif" width="60"><p>Loading...</p>
+    </div>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    &copy; {{ now|date:"Y" }} Budget Tracker — Manage your finances with confidence.
+  </footer>
+
+
+  <script src="{% static 'js/base.js' %}"></script>
+</body>
+</html>
