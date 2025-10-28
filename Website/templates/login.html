@@ -1,41 +1,51 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title %}Login / Sign Up{% endblock %}
+
 {% block extra_style %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
+
 {% block content %}
 <div class="auth-container">
-  <p class="app-tagline">Manage your finances with ease</p>
-  <h2 id="form-title">Login</h2>
-  
-  <!-- FIX 1: Added onsubmit handler and input IDs -->
-  <form id="login-form" onsubmit="handleLogin(event); return false;">
-    {% csrf_token %}
-    <input type="text" id="username" placeholder="Username" required>
-    <input type="password" id="password" placeholder="Password" required>
-    
-    <a href="#" class="forgot-password">Forgot Password?</a>
-    
-    <button type="submit">Log In</button>
-    <div class="toggle-links">Don't have an account? <a href="#" onclick="toggleForms('signup')">Sign Up</a></div>
-  </form>
+    <p class="app-tagline">Manage your finances with ease</p>
+    <h2 id="form-title">Login</h2>
 
-  <form id="signup-form" class="hidden" method="post">
-    {% csrf_token %}
-    <input type="text" placeholder="Full Name" required>
-    <input type="text" placeholder="Username" required>
-    <input type="email" placeholder="Email" required>
-    <input type="password" placeholder="Password" required>
-    <input type="password" placeholder="Confirm Password" required>
-    <button type="submit">Sign Up</button>
-    <div class="toggle-links">Have an account? <a href="#" onclick="toggleForms('login')">Log In</a></div>
-  </form>
+    <!-- Login Form -->
+    <form id="login-form" onsubmit="handleLogin(event); return false;">
+        {% csrf_token %}
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <a href="#" class="forgot-password">Forgot Password?</a>
+        <div id="login-message"></div>
+        <button type="submit">Log In</button>
+        <div class="toggle-links">
+            Don't have an account? <a href="#" onclick="toggleForms('signup')">Sign Up</a>
+        </div>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signup-form" class="hidden" onsubmit="handleSignup(event); return false;">
+        {% csrf_token %}
+        <input type="text" placeholder="Full Name" required>
+        <input type="text" placeholder="Username" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <input type="password" placeholder="Confirm Password" required>
+        <div id="signup-message"></div>
+        <button type="submit">Sign Up</button>
+        <div class="toggle-links">
+            Have an account? <a href="#" onclick="toggleForms('login')">Log In</a>
+        </div>
+    </form>
 </div>
 
+<!-- Dashboard URL for JS -->
 <script>
-    // Correctly defined global variable
-    const DASHBOARD_URL = "{% url 'dashboard' %}";
+    const DASHBOARD_URL = "{% url 'dashboard' %}";
 </script>
+
+<!-- Login/Signup JS -->
 <script src="{% static 'js/login.js' %}"></script>
 {% endblock %}

@@ -19,7 +19,6 @@
   </header>
 
   <nav>
-    <a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a>
     <a href="{% url 'dashboard' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}">Dashboard</a>
     <a href="{% url 'add_transaction' %}" class="{% if request.path == '/add-transaction/' %}active{% endif %}">Add</a>
     <a href="{% url 'edit_transaction' %}" class="{% if request.path == '/edit-transaction/' %}active{% endif %}">Edit</a>

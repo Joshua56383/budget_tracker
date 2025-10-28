@@ -1,29 +1,120 @@
-// WARNING: This is extremely insecure and for demo purposes only!
-const STATIC_USER = "Joshua";
-const STATIC_PASS = "Juswa_19";
+// Demo login/signup system (insecure, client-side only)
+
+// Predefined demo users
+const STATIC_USERS = {
+  "Joshua": "Juswa_19",
+  "Kenneth": "Ken8",
+  "Retsel": "Kane-2t",
+  "Angee": "Angee_12"
+};
+
+// Helper: load dynamic users from localStorage
+function getDynamicUsers() {
+  return JSON.parse(localStorage.getItem('dynamicUsers') || '{}');
+}
+
+// Helper: save dynamic users to localStorage
+function saveDynamicUser(username, password) {
+  const users = getDynamicUsers();
+  users[username] = password;
+  localStorage.setItem('dynamicUsers', JSON.stringify(users));
+}
 
 function handleLogin(event) {
-  event.preventDefault(); // Stop the form from submitting normally
+  event.preventDefault();
 
-  // We read the input values using the new IDs
-  const usernameInput = document.getElementById('username').value;
+  const usernameInput = document.getElementById('username').value.trim();
   const passwordInput = document.getElementById('password').value;
 
-  if (usernameInput === STATIC_USER && passwordInput === STATIC_PASS) {
-    // We replace 'alert()' with a console log or a small notification 
-    // since alert() is generally disruptive and not allowed in some environments.
-    console.log("Login successful! Redirecting to dashboard.");
-    
-    // FIX 2: Use the global variable defined in the HTML template
-    window.location.href = DASHBOARD_URL; 
+  const dynamicUsers = getDynamicUsers();
+  const allUsers = {...STATIC_USERS, ...dynamicUsers};
+
+  if (usernameInput in allUsers && allUsers[usernameInput] === passwordInput) {
+    showMessage("Login successful! Redirecting...", "success");
+    setTimeout(() => { window.location.href = DASHBOARD_URL; }, 1000);
   } else {
-    alert("Invalid username or password. Try 'Joshua' / 'Juswa_19'.");
+    showMessage("Invalid username or password. Please try again.", "error");
   }
 }
 
-// Keep your existing form toggle function as well:
-function toggleForms(mode){
-  document.getElementById('login-form').classList.toggle('hidden', mode==='signup');
-  document.getElementById('signup-form').classList.toggle('hidden', mode==='login');
-  document.getElementById('form-title').textContent = mode==='signup'?'Sign Up':'Login';
+function handleSignup(event) {
+  event.preventDefault();
+
+  const signupForm = document.getElementById('signup-form');
+  const fullName = signupForm.querySelector('input[placeholder="Full Name"]').value.trim();
+  const username = signupForm.querySelector('input[placeholder="Username"]').value.trim();
+  const email = signupForm.querySelector('input[placeholder="Email"]').value.trim();
+  const password = signupForm.querySelector('input[placeholder="Password"]').value;
+  const confirmPassword = signupForm.querySelector('input[placeholder="Confirm Password"]').value;
+
+  if (password !== confirmPassword) {
+    showSignupMessage("Passwords do not match.", "error");
+    return;
+  }
+
+  const dynamicUsers = getDynamicUsers();
+  const allUsers = {...STATIC_USERS, ...dynamicUsers};
+
+  if (username in allUsers) {
+    showSignupMessage("Username already exists.", "error");
+    return;
+  }
+
+  // Save new user to localStorage
+  saveDynamicUser(username, password);
+  showSignupMessage(`User "${username}" created! You can now log in.`, "success");
+
+  // Optionally switch to login form automatically
+  setTimeout(() => {
+    toggleForms('login');
+    clearSignupMessage();
+  }, 1500);
+}
+
+function toggleForms(mode) {
+  document.getElementById('login-form').classList.toggle('hidden', mode === 'signup');
+  document.getElementById('signup-form').classList.toggle('hidden', mode === 'login');
+  document.getElementById('form-title').textContent = mode === 'signup' ? 'Sign Up' : 'Login';
+  clearMessage();
+  clearSignupMessage();
+}
+
+// Inline messages for login
+function showMessage(msg, type) {
+  let msgEl = document.getElementById('login-message');
+  if (!msgEl) {
+    msgEl = document.createElement('div');
+    msgEl.id = 'login-message';
+    msgEl.style.marginTop = '15px';
+    msgEl.style.fontSize = '0.95em';
+    msgEl.style.textAlign = 'center';
+    document.getElementById('login-form').appendChild(msgEl);
+  }
+  msgEl.textContent = msg;
+  msgEl.style.color = type === 'error' ? 'red' : 'green';
+}
+
+function clearMessage() {
+  const msgEl = document.getElementById('login-message');
+  if (msgEl) msgEl.textContent = '';
+}
+
+// Inline messages for signup
+function showSignupMessage(msg, type) {
+  let msgEl = document.getElementById('signup-message');
+  if (!msgEl) {
+    msgEl = document.createElement('div');
+    msgEl.id = 'signup-message';
+    msgEl.style.marginTop = '15px';
+    msgEl.style.fontSize = '0.95em';
+    msgEl.style.textAlign = 'center';
+    document.getElementById('signup-form').appendChild(msgEl);
+  }
+  msgEl.textContent = msg;
+  msgEl.style.color = type === 'error' ? 'red' : 'green';
+}
+
+function clearSignupMessage() {
+  const msgEl = document.getElementById('signup-message');
+  if (msgEl) msgEl.textContent = '';
 }
