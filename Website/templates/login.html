@@ -1,60 +1,41 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Login / Sign Up{% endblock %}
-
 {% block extra_style %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
-
 {% block content %}
-<div class="auth-wrapper">
-  <div class="auth-container">
-    <div class="auth-header">
-      <h2 id="form-title">Welcome Back 👋</h2>
-    </div>
+<div class="auth-container">
+  <p class="app-tagline">Manage your finances with ease</p>
+  <h2 id="form-title">Login</h2>
+  
+  <!-- FIX 1: Added onsubmit handler and input IDs -->
+  <form id="login-form" onsubmit="handleLogin(event); return false;">
+    {% csrf_token %}
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    
+    <a href="#" class="forgot-password">Forgot Password?</a>
+    
+    <button type="submit">Log In</button>
+    <div class="toggle-links">Don't have an account? <a href="#" onclick="toggleForms('signup')">Sign Up</a></div>
+  </form>
 
-    <!-- LOGIN FORM -->
-    <form id="login-form" method="post">
-      {% csrf_token %}
-      <label>Username</label>
-      <input type="text" name="username" placeholder="Enter username" required>
-
-      <label>Password</label>
-      <input type="password" name="password" placeholder="Enter password" required>
-
-      <button type="submit">Log In</button>
-
-      <div class="toggle-links">
-        Don’t have an account? <a href="#" onclick="toggleForms('signup')">Sign Up</a>
-      </div>
-    </form>
-
-    <!-- SIGNUP FORM -->
-    <form id="signup-form" class="hidden" method="post">
-      {% csrf_token %}
-      <label>Full Name</label>
-      <input type="text" name="fullname" placeholder="Enter your full name" required>
-
-      <label>Username</label>
-      <input type="text" name="username" placeholder="Choose a username" required>
-
-      <label>Email</label>
-      <input type="email" name="email" placeholder="Enter your email" required>
-
-      <label>Password</label>
-      <input type="password" name="password" placeholder="Create a password" required>
-
-      <label>Confirm Password</label>
-      <input type="password" name="confirm_password" placeholder="Confirm password" required>
-
-      <button type="submit">Sign Up</button>
-
-      <div class="toggle-links">
-        Already have an account? <a href="#" onclick="toggleForms('login')">Log In</a>
-      </div>
-    </form>
-  </div>
+  <form id="signup-form" class="hidden" method="post">
+    {% csrf_token %}
+    <input type="text" placeholder="Full Name" required>
+    <input type="text" placeholder="Username" required>
+    <input type="email" placeholder="Email" required>
+    <input type="password" placeholder="Password" required>
+    <input type="password" placeholder="Confirm Password" required>
+    <button type="submit">Sign Up</button>
+    <div class="toggle-links">Have an account? <a href="#" onclick="toggleForms('login')">Log In</a></div>
+  </form>
 </div>
 
+<script>
+    // Correctly defined global variable
+    const DASHBOARD_URL = "{% url 'dashboard' %}";
+</script>
 <script src="{% static 'js/login.js' %}"></script>
 {% endblock %}

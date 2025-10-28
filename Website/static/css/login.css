@@ -1,111 +1,98 @@
-.auth-wrapper {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #a2c2e2, #fdfcfb);
-  font-family: "Poppins", sans-serif;
+/* Styles for the Login/Sign Up Form */
+
+/* Setting a clean, modern font for the form elements (using system fonts) */
+.auth-container * {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .auth-container {
-  width: 100%;
-  max-width: 420px;
-  background: white;
-  padding: 40px 35px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s ease;
-  animation: fadeIn 0.6s ease;
+  max-width: 420px; 
+  margin: 60px auto; 
+  background: white; 
+  padding: 40px; 
+  border-radius: 16px; 
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
 }
 
-.auth-header {
+.auth-container .app-tagline {
   text-align: center;
+  font-size: 0.9em; 
+  color: #666;
+  margin-top: -10px;
   margin-bottom: 25px;
 }
 
-.auth-header h2 {
-  color: #2c3e50;
-  font-size: 1.9em;
-  margin-bottom: 10px;
-}
-
-.auth-container form {
-  display: flex;
-  flex-direction: column;
-  animation: slideUp 0.4s ease;
-}
-
-.auth-container label {
-  font-weight: 600;
-  margin-top: 10px;
-  margin-bottom: 5px;
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.8em; 
+  font-weight: 700; 
   color: #333;
 }
 
 .auth-container input {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 1em;
+  width: 100%;
+  padding: 12px 16px; 
   margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px; 
+  box-sizing: border-box;
+  font-size: 1.05em; 
   transition: border-color 0.3s;
 }
 
 .auth-container input:focus {
-  border-color: #4a90e2;
+  border-color: var(--primary);
   outline: none;
 }
 
-.auth-container button {
-  background: #4a90e2;
+.forgot-password {
+    display: block;
+    text-align: right;
+    font-size: 0.9em;
+    color: #999;
+    text-decoration: none;
+    margin-top: -5px;
+    margin-bottom: 25px;
+    transition: color 0.2s;
+}
+
+.forgot-password:hover {
+    color: #666;
+}
+
+/* Style for the Log In button */
+.auth-container button[type="submit"] {
+  width: 100%;
+  padding: 14px; 
+  background-color: #333;
   color: white;
-  padding: 12px;
-  font-size: 1em;
   border: none;
   border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.1em; 
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
-.auth-container button:hover {
-  background: #357ABD;
-  transform: translateY(-2px);
+.auth-container button[type="submit"]:hover {
+  background: var(--primary);
 }
 
+/* Link area for Sign Up */
 .toggle-links {
   text-align: center;
-  margin-top: 15px;
-  font-size: 0.95em;
-  color: #555;
+  margin-top: 25px;
+  font-size: 0.95em; 
+  color: #666;
 }
 
 .toggle-links a {
-  color: #4a90e2;
-  font-weight: 600;
+  color: var(--primary); 
   text-decoration: none;
-  transition: color 0.3s;
-}
-
-.toggle-links a:hover {
-  color: #357ABD;
+  font-weight: 600;
 }
 
 .hidden {
   display: none;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 480px) {
-  .auth-container {
-    padding: 30px 20px;
-  }
 }
